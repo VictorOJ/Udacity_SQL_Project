@@ -1,0 +1,18 @@
+WITH newfilmtable AS (
+    SELECT f.title filmtitle, c.name categoryname
+         FROM film_category fc 
+         JOIN category c
+         ON fc.category_id = c.category_id
+         JOIN film f 
+         ON f.film_id = fc.film_id 
+         JOIN inventory i 
+         ON i.film_id = f.film_id 
+         JOIN rental r
+         ON r.inventory_id = i.inventory_id
+          )
+          
+	SELECT filmtitle, categoryname, count(*)
+		FROM newfilmtable
+	WHERE categoryname IN ('Animation', 'Children', 'Classics', 'Comedy', 'Family', 'Music')
+	GROUP by 1,2
+	ORDER by 2,1;
